@@ -1,19 +1,29 @@
 # Makefile for building luaproc
 
 # lua version
-LUA_VERSION=5.1
+LUA_VERSION=jit-2.0
+#LUA_VERSION=5.1
+
 # path to lua header files
-LUA_INCDIR=/usr/include/lua${LUA_VERSION}
+ifeq ($(LUA_VERSION),jit-2.0)
+LUA_INCDIR=/usr/local/include/lua${LUA_VERSION}
 # path to lua library
-LUA_LIBDIR=/usr/lib/x86_64-linux-gnu/
+LUA_LIBDIR=/usr/local/lib
+# path to install library
+LUA_CPATH=/usr/local/lib/lua/5.1
+else
+LUA_INCDIR=/usr/local/lua${LUA_VERSION}
+# path to lua library
+LUA_LIBDIR=/usr/lib
 # path to install library
 LUA_CPATH=/usr/lib/lua/${LUA_VERSION}
+endif
 
 # standard makefile variables
 CC=gcc
 SRCDIR=src
 BINDIR=bin
-CFLAGS=-c -O2 -Wall -fPIC -I${LUA_INCDIR}
+CFLAGS=-c -O2 -Wall -fPIC -I${LUA_INCDIR} 
 # MacOS X users should replace LIBFLAG with the following definition
 # LIBFLAG=-bundle -undefined dynamic_lookup
 LIBFLAG=-shared

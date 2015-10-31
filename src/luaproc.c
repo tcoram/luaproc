@@ -907,8 +907,13 @@ static void luaproc_openlualibs( lua_State *L ) {
   luaproc_reglualib( L, "os", luaopen_os );
   luaproc_reglualib( L, "table", luaopen_table );
   luaproc_reglualib( L, "string", luaopen_string );
-  luaproc_reglualib( L, "math", luaopen_math );
   luaproc_reglualib( L, "debug", luaopen_debug );
+  luaproc_reglualib( L, "math", luaopen_math );
+#ifdef LUA_JITLIBNAME
+  luaproc_reglualib( L, LUA_FFILIBNAME, luaopen_ffi );
+  luaproc_reglualib( L, LUA_JITLIBNAME, luaopen_jit );
+  luaproc_reglualib( L, LUA_BITLIBNAME, luaopen_bit );
+#endif
 #if (LUA_VERSION_NUM == 502)
   luaproc_reglualib( L, "bit32", luaopen_bit32 );
 #endif
